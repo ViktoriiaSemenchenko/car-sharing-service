@@ -1,6 +1,5 @@
 package com.example.carsharingservice.model;
 
-import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,28 +14,26 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cars")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
-public class Car {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String model;
-    private String brand;
-    private int inventory;
-    private BigDecimal dailyFee;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private Role role;
 
-    public enum Type {
-        SEDAN,
-        SUV,
-        HATCHBACK,
-        UNIVERSAL
+    public enum Role {
+        MANAGER,
+        CUSTOMER
     }
 }
