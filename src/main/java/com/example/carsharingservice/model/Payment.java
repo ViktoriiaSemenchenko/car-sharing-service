@@ -1,6 +1,7 @@
 package com.example.carsharingservice.model;
 
 import java.math.BigDecimal;
+import java.net.URL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,22 +12,26 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Car {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String model;
-    private String brand;
-    private int inventory;
-    private BigDecimal dailyFee;
-
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @Enumerated(EnumType.STRING)
     private Type type;
+    private Long rentalId;
+    private URL sessionUrl;
+    private String sessionId;
+    private BigDecimal amountToPay;
 
+    public enum Status {
+        PENDING,
+        PAID
+    }
+    
     public enum Type {
-        SEDAN,
-        SUV,
-        HATCHBACK,
-        UNIVERSAL
+        PAYMENT,
+        FINE
     }
 }
