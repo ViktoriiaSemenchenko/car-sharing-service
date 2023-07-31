@@ -12,7 +12,7 @@ public class UserRequestDto {
     @Email
     private String email;
     @NotNull
-    @Min(value = 8)
+    @Min(value = 7)
     private String password;
     @NotNull
     private String firstName;
