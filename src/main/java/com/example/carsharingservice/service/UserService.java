@@ -8,4 +8,6 @@ public interface UserService {
     User updateUserRole(Long userId, User.Role newRole);
 
     User getUserByFirstName(String firstName);
+
+    User getByEmail(String email);
 }
