@@ -40,14 +40,14 @@ public class UserController {
     @GetMapping("/me")
     public UserResponseDto get(Authentication auth) {
         String currentUsername = auth.getName();
-        User currentUser = userService.getUserByUsername(currentUsername);
+        User currentUser = userService.getUserByFirstName(currentUsername);
         return userDtoMapper.toDto(currentUser);
     }
 
     @PatchMapping("/me")
     public UserResponseDto updateProfile(@RequestBody @Valid UserRequestDto requestDto, Authentication auth) {
         User user = userDtoMapper.toModel(requestDto);
-        user = userService.getUserByUsername(auth.getName());
+        user = userService.getUserByFirstName(auth.getName());
         return userDtoMapper.toDto(userService.save(user));
     }
 }
