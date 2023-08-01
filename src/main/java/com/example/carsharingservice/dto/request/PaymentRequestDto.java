@@ -1,5 +1,6 @@
 package com.example.carsharingservice.dto.request;
 
+import com.example.carsharingservice.model.Rental;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
@@ -15,12 +16,12 @@ public class PaymentRequestDto {
     @NotNull
     private String type;
     @Positive
-    private Long rentalId;
+    private Rental rental;
     @NotNull
-    private URL sessionUrl;
+    private URL url;
     @NotNull
     private String sessionId;
     @NotNull
     @Positive
-    private BigDecimal amountToPay;
+    private BigDecimal paymentAmount;
 }

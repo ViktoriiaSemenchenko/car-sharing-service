@@ -3,6 +3,7 @@ package com.example.carsharingservice.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ public class UserRequestDto {
     @Email
     private String email;
     @NotNull
-    @Min(value = 7)
+    @Size(min = 7, max = 20)
     private String password;
     @NotNull
     private String firstName;
