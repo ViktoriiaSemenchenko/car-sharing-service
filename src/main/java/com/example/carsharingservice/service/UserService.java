@@ -7,5 +7,5 @@ public interface UserService {
 
     User updateUserRole(Long userId, User.Role newRole);
 
-    User getUserByUsername(String username);
+    User getUserByFirstName(String firstName);
 }
