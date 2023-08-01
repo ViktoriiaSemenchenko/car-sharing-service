@@ -8,6 +8,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,6 +37,10 @@ public class Payment {
     private URL sessionUrl;
     private String sessionId;
     private BigDecimal amountToPay;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private Rental rental;
 
     public enum Status {
         PENDING,
