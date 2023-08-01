@@ -6,8 +6,6 @@ import com.example.carsharingservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -31,6 +29,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName)
+                .orElse(null);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
                 .orElse(null);
     }
 }
