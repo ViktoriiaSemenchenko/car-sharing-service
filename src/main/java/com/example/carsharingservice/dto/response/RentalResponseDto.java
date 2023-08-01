@@ -1,6 +1,9 @@
 package com.example.carsharingservice.dto.response;
 
+import com.example.carsharingservice.model.Car;
+import com.example.carsharingservice.model.User;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +11,9 @@ import lombok.Setter;
 @Setter
 public class RentalResponseDto {
     private Long id;
-    private LocalDate rentalDate;
-    private LocalDate returnDate;
-    private LocalDate actualReturnDate;
-    private Long carId;
-    private Long userId;
+    private LocalDateTime rentalDate;
+    private LocalDateTime returnDate;
+    private LocalDateTime actualReturnDate;
+    private Car car;
+    private User user;
 }

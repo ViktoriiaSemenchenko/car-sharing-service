@@ -1,8 +1,11 @@
 package com.example.carsharingservice.dto.request;
 
+import com.example.carsharingservice.model.Car;
+import com.example.carsharingservice.model.User;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +13,13 @@ import lombok.Setter;
 @Setter
 public class RentalRequestDto {
     @NotNull
-    private LocalDate rentalDate;
+    private LocalDateTime rentalDate;
     @NotNull
-    private LocalDate returnDate;
+    private LocalDateTime returnDate;
     @NotNull
-    private LocalDate actualReturnDate;
+    private LocalDateTime actualReturnDate;
     @Positive
-    private Long carId;
+    private Car car;
     @Positive
-    private Long userId;
+    private User user;
 }

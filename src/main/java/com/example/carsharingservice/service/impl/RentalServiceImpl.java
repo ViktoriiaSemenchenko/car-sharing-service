@@ -4,6 +4,7 @@ import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.RentalService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public Rental setActualReturnDate(Long rentalId, LocalDate actualReturnDate) {
+    public Rental setActualReturnDate(Long rentalId, LocalDateTime actualReturnDate) {
         Rental rental = rentalRepository.findById(rentalId).orElse(null);
         if (rental != null) {
             rental.setActualReturnDate(actualReturnDate);

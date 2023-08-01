@@ -15,7 +15,7 @@ public class CarMapper implements DtoMapper<CarRequestDto, CarResponseDto, Car> 
         responseDto.setBrand(car.getBrand());
         responseDto.setInventory(car.getInventory());
         responseDto.setDailyFee(car.getDailyFee());
-        responseDto.setType(String.valueOf(car.getType()));
+        responseDto.setType(String.valueOf(car.getCarType()));
         return responseDto;
     }
 
@@ -26,7 +26,7 @@ public class CarMapper implements DtoMapper<CarRequestDto, CarResponseDto, Car> 
         car.setBrand(dto.getBrand());
         car.setInventory(dto.getInventory());
         car.setDailyFee(dto.getDailyFee());
-        car.setType(Car.Type.valueOf(dto.getType()));
+        car.setCarType(Car.CarType.valueOf(dto.getType()));
         return car;
     }
 }
