@@ -6,4 +6,6 @@ public interface UserService {
     User save(User user);
 
     User updateUserRole(Long userId, User.Role newRole);
+
+    User getUserByUsername(String username);
 }
