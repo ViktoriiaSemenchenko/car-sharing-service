@@ -4,7 +4,6 @@ import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.User;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;

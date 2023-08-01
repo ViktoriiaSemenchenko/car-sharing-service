@@ -3,7 +3,6 @@ package com.example.carsharingservice.service.impl;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.RentalService;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -2,7 +2,6 @@ package com.example.carsharingservice.dto.response;
 
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.User;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
