@@ -6,6 +6,8 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,22 +20,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userDtoMapper;
 
-    public UserController(UserService userService,
-                          DtoMapper<UserRequestDto, UserResponseDto, User> userResponseDtoMapper) {
-        this.userService = userService;
-        this.userDtoMapper = userResponseDtoMapper;
-    }
-
     @PutMapping("/{id}/role")
     public UserResponseDto update(@PathVariable Long id,
-                                  @RequestBody @Valid UserRequestDto requestDto) {
+                                  @RequestBody @Valid UserRequestDto requestDto,
+                                  @RequestParam User.Role userRole) {
         User user = userDtoMapper.toModel(requestDto);
         user.setId(id);
-        userService.updateUserRole(id, User.Role.valueOf(requestDto.getRole()));
+        userService.updateUserRole(id, userRole);
         return userDtoMapper.toDto(user);
     }
 
@@ -46,8 +44,8 @@ public class UserController {
 
     @PatchMapping("/me")
     public UserResponseDto updateProfile(@RequestBody @Valid UserRequestDto requestDto, Authentication auth) {
-        User user = userDtoMapper.toModel(requestDto);
-        user = userService.getUserByFirstName(auth.getName());
+        User user = userService.getUserByFirstName(auth.getName());
+        BeanUtils.copyProperties(requestDto, user, requestDto.getPassword());
         return userDtoMapper.toDto(userService.save(user));
     }
 }
