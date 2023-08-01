@@ -13,10 +13,10 @@ public class PaymentMapper implements DtoMapper<PaymentRequestDto, PaymentRespon
         responseDto.setId(payment.getId());
         responseDto.setStatus(String.valueOf(payment.getStatus()));
         responseDto.setType(String.valueOf(payment.getType()));
-        responseDto.setRentalId(payment.getRentalId());
-        responseDto.setSessionUrl(payment.getSessionUrl());
+        responseDto.setRental(payment.getRental());
+        responseDto.setUrl(payment.getUrl());
         responseDto.setSessionId(payment.getSessionId());
-        responseDto.setAmountToPay(payment.getAmountToPay());
+        responseDto.setPaymentAmount(payment.getPaymentAmount());
         return responseDto;
     }
 
@@ -25,10 +25,10 @@ public class PaymentMapper implements DtoMapper<PaymentRequestDto, PaymentRespon
         Payment payment = new Payment();
         payment.setStatus(Payment.Status.valueOf(dto.getStatus()));
         payment.setType(Payment.Type.valueOf(dto.getType()));
-        payment.setRentalId(dto.getRentalId());
-        payment.setSessionUrl(dto.getSessionUrl());
+        payment.setRental(dto.getRental());
         payment.setSessionId(dto.getSessionId());
-        payment.setAmountToPay(dto.getAmountToPay());
+        payment.setUrl(dto.getUrl());
+        payment.setPaymentAmount(dto.getPaymentAmount());
         return payment;
     }
 }
