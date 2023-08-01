@@ -24,11 +24,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean authenticate(String email, String password) {
-        User user = userService.getByEmail(email);
-
-        if (user != null && password.equals(user.getPassword())) {
-            return true;
+        User user;
+        try {
+            user = userService.getByEmail(email);
+            if (password.equals(user.getPassword())) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException("Incorrect username or password");
         }
-        return false;
     }
 }
