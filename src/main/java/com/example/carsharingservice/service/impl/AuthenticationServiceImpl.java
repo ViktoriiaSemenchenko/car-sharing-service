@@ -21,4 +21,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRole(User.Role.CUSTOMER);
         return userService.save(user);
     }
+
+    @Override
+    public boolean authenticate(String email, String password) {
+        User user = userService.getByEmail(email);
+
+        if (user != null && password.equals(user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
 }

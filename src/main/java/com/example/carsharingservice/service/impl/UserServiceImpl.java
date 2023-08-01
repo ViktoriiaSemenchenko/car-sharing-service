@@ -25,4 +25,16 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public User getUserByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName)
+                .orElse(null);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email)
+                .orElse(null);
+    }
 }
