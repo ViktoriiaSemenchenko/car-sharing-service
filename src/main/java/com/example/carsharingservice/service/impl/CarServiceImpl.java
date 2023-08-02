@@ -5,7 +5,6 @@ import com.example.carsharingservice.repository.CarRepository;
 import com.example.carsharingservice.service.CarService;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

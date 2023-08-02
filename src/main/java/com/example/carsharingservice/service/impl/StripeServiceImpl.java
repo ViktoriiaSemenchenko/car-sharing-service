@@ -8,8 +8,8 @@ import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.StripeService;
 import com.example.carsharingservice.service.mapper.PaymentMapper;
 import com.stripe.Stripe;
-import com.stripe.model.checkout.Session;
 import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,10 +23,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class StripeServiceImpl implements StripeService {
     private static final String PAYMENT_URL = "http://localhost:8080/payments";
-    private final PaymentService paymentService;
-    private final PaymentMapper mapper;
     @Value("${stripe.api.key}")
     private static String stripeSecretKey;
+    private final PaymentService paymentService;
+    private final PaymentMapper mapper;
+
     @Override
     public SessionCreateParams createPaymentSession(Long rentalId, Payment.Type type) {
         Stripe.apiKey = stripeSecretKey;
@@ -73,7 +74,8 @@ public class StripeServiceImpl implements StripeService {
             requestDto.setUrl(new URL(sessionUrl));
             requestDto.setType(String.valueOf(paymentRequestInfoDto.getType()));
             requestDto.setStatus(String.valueOf(Payment.Status.PENDING));
-            requestDto.setPaymentAmount(amountToPay.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP));
+            requestDto.setPaymentAmount(amountToPay.divide(BigDecimal.valueOf(100),
+                    RoundingMode.HALF_UP));
             return mapper.toDto(paymentService.save(mapper.toModel(requestDto)));
         } catch (StripeException | MalformedURLException e) {
             throw new RuntimeException("Can't get payment page.", e);
