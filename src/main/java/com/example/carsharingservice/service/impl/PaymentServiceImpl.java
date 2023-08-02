@@ -1,6 +1,7 @@
 package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Payment;
+import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.PaymentRepository;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.RentalService;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final RentalService rentalService;
+    private final PaymentHandlerStrategy strategy;
 
     @Override
     public Payment save(Payment payment) {
@@ -53,7 +55,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public BigDecimal calculatePaymentAmount(Long rentalId, Payment.Type type) {
-        return null;
+        Rental rental = rentalService.get(rentalId);
+        return strategy.getHandler(type)
+                .calculateTotalAmount(rental)
+                .multiply(BigDecimal.valueOf(100));
     }
 
     @Override
