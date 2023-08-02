@@ -1,14 +1,11 @@
 package com.example.carsharingservice.controller;
 
-import com.example.carsharingservice.dto.request.PaymentRequestDto;
+import com.example.carsharingservice.dto.request.PaymentRequestInfoDto;
+import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.service.PaymentService;
-import com.example.carsharingservice.service.RentalService;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import com.example.carsharingservice.service.StripeService;
+import com.stripe.param.checkout.SessionCreateParams;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,33 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/payments")
+@RequiredArgsConstructor
 public class PaymentController {
+    private final StripeService stripeService;
     private final PaymentService paymentService;
-    private final RentalService rentalService;
 
-    @Value("${stripe.api.key}")
-    private String stripeSecretKey;
-
-    public PaymentController(PaymentService paymentService, RentalService rentalService) {
-        this.paymentService = paymentService;
-        this.rentalService = rentalService;
-    }
-
-    @PostMapping("/create-payment-intent")
-    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentRequestDto createPayment)
-            throws StripeException {
-        try {
-            Stripe.apiKey = stripeSecretKey;
-            PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
-                    .setCurrency("usd")
-                    .setAmount(15 * 100L)
-                    .build();
-            PaymentIntent intent = PaymentIntent.create(createParams);
-            return ResponseEntity.ok(intent.getClientSecret());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Помилка створення платіжного інтенту.");
-        }
+    @PostMapping
+    public PaymentResponseDto createStripeSession(
+            @RequestBody PaymentRequestInfoDto paymentInfoRequestDto) {
+        SessionCreateParams params = stripeService.createPaymentSession(
+                paymentInfoRequestDto.getRentalId(), paymentInfoRequestDto.getType());
+        return stripeService.getPaymentFromSession(params, paymentInfoRequestDto);
     }
 
     @GetMapping("/success")
