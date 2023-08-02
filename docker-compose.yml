@@ -21,11 +21,10 @@ services:
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
-      SPRING_APPLICATION_JSON: '{
-                                "spring.datasource.url":"jdbc:mysql://localhost:3306:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
-                                "spring.datasource.username":"$MYSQLDB_USER",
-                                "spring.datasource.password":"$MYSQLDB_ROOT_PASS",
-                                "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
-                                "spring.jpa.hibernate.ddl-auto" : "validate"
-      }'
-
+      SPRING_APPLICATION_JSON: '{"spring.datasource.url":"jdbc:mysql://mysql-db:3306/$MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
+      "spring.datasource.username":"$MYSQLDB_USER",
+      "spring.datasource.password":"$MYSQLDB_ROOT_PASS",
+      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+      "spring.jpa.hibernate.ddl-auto" : "validate"}'
+      STRIPE_API_KEY: ${STRIPE_API_KEY}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
