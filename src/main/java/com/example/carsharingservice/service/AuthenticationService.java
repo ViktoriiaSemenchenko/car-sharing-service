@@ -1,9 +1,11 @@
 package com.example.carsharingservice.service;
 
-import com.example.carsharingservice.model.User;
+import com.example.carsharingservice.dto.request.SignUpRequestDto;
+import com.example.carsharingservice.dto.request.SigninRequestDto;
+import com.example.carsharingservice.dto.response.JwtAuthenticationResponseDto;
 
 public interface AuthenticationService {
-    User register(String email, String password, String firstName, String lastName);
+    JwtAuthenticationResponseDto signup(SignUpRequestDto request);
 
-    boolean authenticate(String email, String password);
+    JwtAuthenticationResponseDto signin(SigninRequestDto request);
 }
