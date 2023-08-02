@@ -1,26 +1,31 @@
 package com.example.carsharingservice.controller;
 
-import com.example.carsharingservice.dto.request.UserRequestDto;
-import com.example.carsharingservice.dto.response.UserResponseDto;
-import com.example.carsharingservice.model.User;
+import com.example.carsharingservice.dto.request.SignUpRequestDto;
+import com.example.carsharingservice.dto.request.SigninRequestDto;
+import com.example.carsharingservice.dto.response.JwtAuthenticationResponseDto;
 import com.example.carsharingservice.service.AuthenticationService;
-import com.example.carsharingservice.service.mapper.DtoMapper;
-import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    private final DtoMapper<UserRequestDto, UserResponseDto, User> mapper;
 
-    @PostMapping("/register")
-    public UserResponseDto register(@RequestBody @Valid UserRequestDto requestDto) {
-        User user = authenticationService.register(requestDto.getEmail(), requestDto.getPassword(),
-                requestDto.getFirstName(), requestDto.getLastName());
-        return mapper.toDto(user);
+    @PostMapping("/signup")
+    public ResponseEntity<JwtAuthenticationResponseDto> signup(@RequestBody
+                                                                   SignUpRequestDto request) {
+        return ResponseEntity.ok(authenticationService.signup(request));
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<JwtAuthenticationResponseDto> signin(@RequestBody
+                                                                   SigninRequestDto request) {
+        return ResponseEntity.ok(authenticationService.signin(request));
     }
 }
