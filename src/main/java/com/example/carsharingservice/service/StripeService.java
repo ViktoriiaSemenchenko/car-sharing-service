@@ -7,5 +7,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 public interface StripeService {
     SessionCreateParams createPaymentSession(Long rentalId, Payment.Type type);
-    PaymentResponseDto getPaymentFromSession(SessionCreateParams params, PaymentRequestInfoDto paymentRequestInfoDto);
+
+    PaymentResponseDto getPaymentFromSession(SessionCreateParams params,
+                                             PaymentRequestInfoDto paymentRequestInfoDto);
 }

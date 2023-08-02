@@ -1,7 +1,5 @@
 package com.example.carsharingservice.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.model.Car;
@@ -10,6 +8,8 @@ import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.mapper.RentalMapper;
 import jakarta.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

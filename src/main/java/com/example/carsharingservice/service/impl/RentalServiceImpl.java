@@ -21,8 +21,8 @@ public class RentalServiceImpl implements RentalService {
     public Rental save(Rental rental) {
         Car car = rental.getCar();
         if (car.getInventory() == 0) {
-            throw new NoSuchElementException("This car is currently" +
-                    " unavailable for rental.");
+            throw new NoSuchElementException("This car is currently"
+                    + " unavailable for rental.");
         }
         car.setInventory(car.getInventory() - 1);
         carService.update(car);
