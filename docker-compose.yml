@@ -28,3 +28,4 @@ services:
       "spring.jpa.hibernate.ddl-auto" : "validate"}'
       STRIPE_API_KEY: ${STRIPE_API_KEY}
       STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      TOKEN_SIGNING_KEY: ${TOKEN_SIGNING_KEY}
