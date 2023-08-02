@@ -1,7 +1,9 @@
 package com.example.carsharingservice.service.impl;
 
+import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.RentalRepository;
+import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,9 +15,17 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
+    private final CarService carService;
 
     @Override
     public Rental save(Rental rental) {
+        Car car = rental.getCar();
+        if (car.getInventory() == 0) {
+            throw new NoSuchElementException("This car is currently" +
+                    " unavailable for rental.");
+        }
+        car.setInventory(car.getInventory() - 1);
+        carService.update(car);
         return rentalRepository.save(rental);
     }
 
@@ -33,6 +43,13 @@ public class RentalServiceImpl implements RentalService {
             return rentalRepository.save(rental);
         }
         return null;
+    }
+
+    @Override
+    public Rental returnRental(Long id) {
+        Rental rental = get(id);
+        rental.setActualReturnDate(LocalDateTime.now());
+        return rentalRepository.save(rental);
     }
 
     @Override

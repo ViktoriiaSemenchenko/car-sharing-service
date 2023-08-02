@@ -11,4 +11,6 @@ public interface CarService {
     List<Car> getAll();
 
     void delete(Long id);
+
+    void update(Car car);
 }
