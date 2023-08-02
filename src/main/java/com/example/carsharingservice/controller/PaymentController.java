@@ -31,7 +31,7 @@ public class PaymentController {
 
     @GetMapping("/success")
     public ResponseEntity<String> handleSuccessfulPayment(@RequestParam("sessionId")
-                                                              String sessionId) {
+                                                          String sessionId) {
         boolean paymentSuccessful = paymentService.isSessionPaid(sessionId);
         if (paymentSuccessful) {
             paymentService.getPaymentsByUserId(Long.valueOf(sessionId));
