@@ -1,9 +1,11 @@
 package com.example.carsharingservice.dto.request;
 
 import com.example.carsharingservice.model.Payment;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PaymentRequestInfoDto {
     private Long rentalId;
     private Payment.Type type;
