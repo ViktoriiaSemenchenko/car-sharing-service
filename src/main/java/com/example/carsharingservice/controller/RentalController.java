@@ -35,8 +35,8 @@ public class RentalController {
     }
 
     @PostMapping("/{id}/return")
-    public RentalResponseDto returnRental(@PathVariable("id") Long rentalId) {
-        Rental rental = rentalService.returnRental(rentalId);
+    public RentalResponseDto returnRental(@PathVariable Long id) {
+        Rental rental = rentalService.returnRental(id);
         Car car = rental.getCar();
         car.setInventory(car.getInventory() + 1);
         carService.save(car);
@@ -54,8 +54,8 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public RentalResponseDto getRentalById(@PathVariable("id") Long rentalId) {
-        Rental rental = rentalService.get(rentalId);
+    public RentalResponseDto getRentalById(@PathVariable Long id) {
+        Rental rental = rentalService.get(id);
         return mapper.toDto(rental);
     }
 }

@@ -37,11 +37,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void update(Car car) {
-        Optional<Car> optionalCar = carRepository.findById(car.getId());
-        if (optionalCar.isEmpty()) {
-            throw new NoSuchElementException("Can't find car by id " + car);
-        }
-        Car carToUpdate = optionalCar.get();
+        Car carToUpdate = carRepository.findById(car.getId()).orElseThrow(()
+                -> new NoSuchElementException("Can't find car by id " + car));
         carToUpdate.setCarType(car.getCarType());
         carToUpdate.setDailyFee(car.getDailyFee());
         carToUpdate.setBrand(car.getCarType().toString());
