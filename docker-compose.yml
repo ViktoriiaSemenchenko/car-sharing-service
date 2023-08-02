@@ -27,3 +27,5 @@ services:
       "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
       "spring.jpa.hibernate.ddl-auto" : "validate"}'
       TOKEN_SIGNING_KEY: ${TOKEN_SIGNING_KEY}
+      telegram.bot.name: ${BOT_NAME}
+      telegram.bot.token: ${BOT_TOKEN}
