@@ -5,6 +5,7 @@ import com.example.carsharingservice.repository.CarRepository;
 import com.example.carsharingservice.service.CarService;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,19 @@ public class CarServiceImpl implements CarService {
     @Override
     public void delete(Long id) {
         carRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(Car car) {
+        Optional<Car> optionalCar = carRepository.findById(car.getId());
+        if (optionalCar.isEmpty()) {
+            throw new NoSuchElementException("Can't find car by id " + car);
+        }
+        Car carToUpdate = optionalCar.get();
+        carToUpdate.setCarType(car.getCarType());
+        carToUpdate.setDailyFee(car.getDailyFee());
+        carToUpdate.setBrand(car.getCarType().toString());
+        carToUpdate.setModel(car.getModel());
+        carRepository.save(carToUpdate);
     }
 }
