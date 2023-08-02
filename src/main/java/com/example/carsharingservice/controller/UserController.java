@@ -44,8 +44,8 @@ public class UserController {
 
     @GetMapping("/me")
     public UserResponseDto get(Authentication auth) {
-        String currentUsername = auth.getName();
-        User currentUser = userService.getUserByFirstName(currentUsername);
+        String email = auth.getName();
+        User currentUser = userService.getByEmail(email);
         return userDtoMapper.toDto(currentUser);
     }
 

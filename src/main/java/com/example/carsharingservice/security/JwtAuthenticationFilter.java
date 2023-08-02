@@ -1,6 +1,5 @@
 package com.example.carsharingservice.security;
 
-import com.example.carsharingservice.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final UserService userService;
+    private final CustomUserDetailService userDetailService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -39,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtService.extractUserName(jwt);
         if (StringUtils.isNotEmpty(userEmail)
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.userDetailsService()
+            UserDetails userDetails = userDetailService
                     .loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();

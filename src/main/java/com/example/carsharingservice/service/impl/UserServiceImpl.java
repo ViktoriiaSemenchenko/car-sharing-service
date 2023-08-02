@@ -16,17 +16,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String email) {
-                return userRepository.findByEmail(email)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            }
-        };
-    }
-
-    @Override
     public User save(User user) {
         return userRepository.save(user);
     }
