@@ -26,6 +26,4 @@ services:
       "spring.datasource.password":"$MYSQLDB_ROOT_PASS",
       "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
       "spring.jpa.hibernate.ddl-auto" : "validate"}'
-      STRIPE_API_KEY: ${STRIPE_API_KEY}
-      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
       TOKEN_SIGNING_KEY: ${TOKEN_SIGNING_KEY}
