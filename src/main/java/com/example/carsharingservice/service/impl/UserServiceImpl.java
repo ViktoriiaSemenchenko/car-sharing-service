@@ -3,10 +3,9 @@ package com.example.carsharingservice.service.impl;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.UserService;
+import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -30,8 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByFirstName(String firstName) {
-        return userRepository.findByFirstName(firstName)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user by firstName:" + firstName));
+        return userRepository.findByFirstName(firstName).orElseThrow(() ->
+                new NoSuchElementException("Can't find user by firstName:" + firstName));
     }
 
     @Override
