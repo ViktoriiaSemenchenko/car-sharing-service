@@ -24,31 +24,32 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request ->  request.requestMatchers(HttpMethod.POST,
-                                "/register", "/login", "/register/manager").permitAll()
-                        //todo розібратися з ролями як правильно підставляти
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(HttpMethod.POST, "/register", "/login",
+                                "/register/manager")
+                        .permitAll()
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/payments/success",
+                                "/payments/cancel/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cars").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cars/{id}").hasAnyRole("MANAGER",
+                                "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/rentals**", "/rentals/{id}")
+                        .hasRole("MANAGER")
                         .requestMatchers(HttpMethod.POST, "/cars", "/rentals/{id}/return")
                         .hasRole("MANAGER")
                         .requestMatchers(HttpMethod.POST, "/rentals", "/payments")
                         .hasAnyRole("MANAGER", "CUSTOMER")
-                        .requestMatchers(HttpMethod.GET, "/users/me", "/cars/{id}")
-                        .hasAnyRole("MANAGER", "CUSTOMER")
-                        .requestMatchers(HttpMethod.GET, "/rentals**", "/rentals/{id}")
-                        .hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.GET, "/payments/success", "/payments/cancel/")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET,"/cars").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/cars/{id}").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/users/{id}/role")
-                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}/role").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/users/me")
                         .hasAnyRole("MANAGER", "CUSTOMER")
                         .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

@@ -52,7 +52,7 @@ public class UserController {
     @PatchMapping("/me")
     public UserResponseDto updateProfile(@RequestBody @Valid UserRequestDto requestDto,
                                          Authentication auth) {
-        User user = userService.getUserByFirstName(auth.getName()); //todo чого пошук за FirstName??? а не email
+        User user = userService.getUserByFirstName(auth.getName());
         BeanUtils.copyProperties(requestDto, user, requestDto.getPassword());
         return userDtoMapper.toDto(userService.save(user));
     }
