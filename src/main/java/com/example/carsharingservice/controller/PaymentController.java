@@ -3,6 +3,7 @@ package com.example.carsharingservice.controller;
 import com.example.carsharingservice.dto.request.PaymentRequestInfoDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
+import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.StripeService;
 import com.example.carsharingservice.service.TelegramNotificationService;
@@ -37,19 +38,19 @@ public class PaymentController {
         Payment payment = paymentService.findBySessionId(sessionId);
         if (payment == null) {
             notificationService.sendMessageToUser("Payment not found.",
-                    paymentService.findBySessionId(sessionId).getRental().getUser());
+                    new User());
             return "payment not found";
         }
         if (paymentService.isSessionPaid(sessionId)) {
             notificationService.sendMessageToUser("Payment was not successful.",
-                    paymentService.findBySessionId(sessionId).getRental().getUser());
+                    new User());
             return "invalid payment";
         }
 
         payment.setStatus(Payment.Status.PAID);
-        paymentService.update(payment);
+        paymentService.save(payment);
         notificationService.sendMessageToUser("Payment successfully processed.",
-                paymentService.findBySessionId(sessionId).getRental().getUser());
+                new User());
         return "Your payment was successful!";
     }
 

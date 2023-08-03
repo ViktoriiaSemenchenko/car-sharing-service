@@ -10,4 +10,6 @@ public interface UserService {
     User getUserByFirstName(String firstName);
 
     User getByEmail(String email);
+
+    User getById(Long id);
 }

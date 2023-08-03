@@ -1,7 +1,5 @@
 package com.example.carsharingservice.dto.response;
 
-import com.example.carsharingservice.model.Car;
-import com.example.carsharingservice.model.User;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +11,6 @@ public class RentalResponseDto {
     private LocalDateTime rentalDate;
     private LocalDateTime returnDate;
     private LocalDateTime actualReturnDate;
-    private Car car;
-    private User user;
+    private Long carId;
+    private Long userId;
 }
