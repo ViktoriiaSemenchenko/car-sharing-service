@@ -26,10 +26,4 @@ public class AuthenticationController {
                                                               UserLoginRequestDto request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
-
-    @PostMapping("/register/manager")
-    public ResponseEntity<JwtAuthenticationResponseDto> registerManager(@RequestBody
-                                                                 UserRegisterRequestDto request) {
-        return ResponseEntity.ok(authenticationService.registerManager(request));
-    }
 }
