@@ -7,7 +7,5 @@ import com.example.carsharingservice.dto.response.JwtAuthenticationResponseDto;
 public interface AuthenticationService {
     JwtAuthenticationResponseDto register(UserRegisterRequestDto request);
 
-    JwtAuthenticationResponseDto registerManager(UserRegisterRequestDto request);
-
     JwtAuthenticationResponseDto login(UserLoginRequestDto request);
 }

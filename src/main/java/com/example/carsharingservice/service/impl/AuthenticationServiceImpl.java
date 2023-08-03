@@ -20,22 +20,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponseDto register(UserRegisterRequestDto request) {
-        return getJwtAuthenticationResponseDto(request, User.Role.CUSTOMER);
-    }
-
-    @Override
-    public JwtAuthenticationResponseDto registerManager(UserRegisterRequestDto request) {
-        return getJwtAuthenticationResponseDto(request, User.Role.MANAGER);
-    }
-
-    private JwtAuthenticationResponseDto getJwtAuthenticationResponseDto(
-            UserRegisterRequestDto request, User.Role role) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(role)
+                .role(User.Role.CUSTOMER)
                 .build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
