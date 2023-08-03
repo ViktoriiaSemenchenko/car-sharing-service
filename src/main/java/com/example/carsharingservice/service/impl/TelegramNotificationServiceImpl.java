@@ -17,7 +17,7 @@ public class TelegramNotificationServiceImpl extends TelegramLongPollingBot
     private String botName;
     @Value("${telegram.bot.token}")
     private String botToken;
-    @Value("${telegram.users.id}")
+    @Value("${telegram.user.id}")
     private String user_id;
 
 
@@ -44,7 +44,7 @@ public class TelegramNotificationServiceImpl extends TelegramLongPollingBot
     @Override
     public void sendMessageToUser(String message, User user) {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId("-" + user_id);
+        sendMessage.setChatId(user_id);
         sendMessage.setText(message);
         try {
             execute(sendMessage);

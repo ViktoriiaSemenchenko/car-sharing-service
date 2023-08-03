@@ -47,7 +47,6 @@ public class PaymentController {
         }
     }
 
-
     // GET: payments/cancel/
     @GetMapping("/cancel/")
     public ResponseEntity<String> returnPaymentPausedMessage() {
