@@ -33,50 +33,35 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->  request.requestMatchers(HttpMethod.POST,
                                 "/register", "/login", "/register/manager").permitAll()
-                                .requestMatchers( "/**").permitAll()
+//                                .requestMatchers( "/**").permitAll()
                         //todo розібратися з ролями як правильно підставляти
-//                        .requestMatchers(HttpMethod.GET, "/health").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/cars", "/rentals/{id}/return")
-//                        .hasRole("MANAGER")
-//                        .requestMatchers(HttpMethod.POST, "/rentals", "/payments")
-//                        .hasAnyRole("MANAGER", "CUSTOMER")
-//                        .requestMatchers(HttpMethod.GET, "/users/me", "/cars/{id}")
-//                        .hasAnyRole("MANAGER", "CUSTOMER")
-//                        .requestMatchers(HttpMethod.GET, "/rentals**", "/rentals/{id}")
-//                        .hasRole("MANAGER")
-//                        .requestMatchers(HttpMethod.GET, "/payments/success", "/payments/cancel/")
-//                        .permitAll()
-//                        .requestMatchers(HttpMethod.GET,"/cars").permitAll()
-//                        .requestMatchers(HttpMethod.PUT, "/cars/{id}").hasRole("MANAGER")
-//                        .requestMatchers(HttpMethod.PUT, "/users/{id}/role")
-//                        .hasRole("MANAGER")
-//                        .requestMatchers(HttpMethod.PUT, "/users/me")
-//                        .hasAnyRole("MANAGER", "CUSTOMER")
-//                        .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/health").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/cars", "/rentals/{id}/return")
+                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/rentals", "/payments")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/users/me", "/cars/{id}")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/rentals**", "/rentals/{id}")
+                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/payments/success", "/payments/cancel/")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET,"/cars").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/cars/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}/role")
+                        .hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/users/me")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-            throws Exception {
-        return config.getAuthenticationManager();
     }
 }

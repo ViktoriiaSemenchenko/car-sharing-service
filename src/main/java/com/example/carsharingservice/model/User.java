@@ -86,8 +86,8 @@ public class User implements UserDetails {
     }
 
     public enum Role {
-        MANAGER("MANAGER"),
-        CUSTOMER("CUSTOMER");
+        MANAGER("ROLE_MANAGER"),
+        CUSTOMER("ROLE_CUSTOMER");
         private final String val;
 
         Role(String val) {
