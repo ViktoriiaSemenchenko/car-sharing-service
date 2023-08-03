@@ -1,28 +1,18 @@
 package com.example.carsharingservice.service.mapper;
 
+import com.example.carsharingservice.config.MapperConfig;
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.model.User;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class UserMapper implements DtoMapper<UserRequestDto, UserResponseDto, User> {
+@Mapper(config = MapperConfig.class)
+public interface UserMapper extends DtoMapper<UserRequestDto, UserResponseDto, User> {
     @Override
-    public UserResponseDto toDto(User user) {
-        UserResponseDto responseDto = new UserResponseDto();
-        responseDto.setId(user.getId());
-        responseDto.setEmail(user.getEmail());
-        responseDto.setFirstName(user.getFirstName());
-        responseDto.setLastName(user.getLastName());
-        return responseDto;
-    }
+    UserResponseDto toDto(User user);
 
     @Override
-    public User toModel(UserRequestDto dto) {
-        User user = new User();
-        user.setEmail(dto.getEmail());
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        return null;
-    }
+    User toModel(UserRequestDto dto);
 }
+
+
