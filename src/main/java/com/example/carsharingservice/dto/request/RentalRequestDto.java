@@ -17,7 +17,7 @@ public class RentalRequestDto {
     private LocalDateTime returnDate;
     @NotNull
     private LocalDateTime actualReturnDate;
-    @Positive
+    @Positive //todo який позітів?? чому обєкт?
     private Car car;
     @Positive
     private User user;

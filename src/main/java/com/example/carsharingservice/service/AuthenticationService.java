@@ -1,11 +1,13 @@
 package com.example.carsharingservice.service;
 
-import com.example.carsharingservice.dto.request.SignUpRequestDto;
-import com.example.carsharingservice.dto.request.SigninRequestDto;
+import com.example.carsharingservice.dto.request.UserRegisterRequestDto;
+import com.example.carsharingservice.dto.request.UserLoginRequestDto;
 import com.example.carsharingservice.dto.response.JwtAuthenticationResponseDto;
 
 public interface AuthenticationService {
-    JwtAuthenticationResponseDto signup(SignUpRequestDto request);
+    JwtAuthenticationResponseDto register(UserRegisterRequestDto request);
 
-    JwtAuthenticationResponseDto signin(SigninRequestDto request);
+    JwtAuthenticationResponseDto registerManager(UserRegisterRequestDto request);
+
+    JwtAuthenticationResponseDto login(UserLoginRequestDto request);
 }
