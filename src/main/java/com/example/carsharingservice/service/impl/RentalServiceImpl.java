@@ -65,7 +65,7 @@ public class RentalServiceImpl implements RentalService {
         }
     }
 
-    @Scheduled(cron = "0 40 18 * * ?")
+    @Scheduled(cron = "0 58 18 * * ?")
     public void checkOverdueRentals() {
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         List<Rental> overdueRentals = rentalRepository.findOverdueRentalsForTomorrow(tomorrow);
