@@ -2,6 +2,7 @@ package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
+import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
@@ -64,7 +65,7 @@ public class RentalServiceImpl implements RentalService {
         }
     }
 
-    @Scheduled(cron = "0 52 17 * * ?")
+    @Scheduled(cron = "0 40 18 * * ?")
     public void checkOverdueRentals() {
         LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
         List<Rental> overdueRentals = rentalRepository.findOverdueRentalsForTomorrow(tomorrow);
@@ -73,6 +74,8 @@ public class RentalServiceImpl implements RentalService {
                 String message = "Overdue rental: Rental ID - " + rental.getId() + ", Return Date - " + rental.getReturnDate();
                 notificationService.sendMessageToUser(message, rental.getUser());
             }
+        } else {
+            notificationService.sendMessageToUser("No rentals overdue today!", new User());
         }
     }
 }
