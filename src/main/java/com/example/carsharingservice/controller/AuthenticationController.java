@@ -1,7 +1,7 @@
 package com.example.carsharingservice.controller;
 
-import com.example.carsharingservice.dto.request.UserRegisterRequestDto;
 import com.example.carsharingservice.dto.request.UserLoginRequestDto;
+import com.example.carsharingservice.dto.request.UserRegisterRequestDto;
 import com.example.carsharingservice.dto.response.JwtAuthenticationResponseDto;
 import com.example.carsharingservice.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
