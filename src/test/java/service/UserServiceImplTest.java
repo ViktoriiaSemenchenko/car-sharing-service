@@ -55,7 +55,7 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).save(any(User.class));
     }
 
-   /* @Test
+/*    @Test
     void testUpdateUser() {
         Long userId = testUser.getId();
         User.Role newRole = User.Role.MANAGER;
