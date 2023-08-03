@@ -45,6 +45,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "/users/me")
                         .hasAnyRole("MANAGER", "CUSTOMER")
                         .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/auth/**",
+                                "/v3/api-docs/**", "/v3/api-docs.yaml",
+                                "/swagger-ui/**","/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
