@@ -2,6 +2,7 @@ package com.example.carsharingservice.controller;
 
 import com.example.carsharingservice.dto.request.PaymentRequestInfoDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
+import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.StripeService;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -30,22 +31,23 @@ public class PaymentController {
     }
 
     @GetMapping("/success")
-    public ResponseEntity<String> handleSuccessfulPayment(@RequestParam("sessionId")
-                                                          String sessionId) {
-        boolean paymentSuccessful = paymentService.isSessionPaid(sessionId);
-        if (paymentSuccessful) {
-            paymentService.getPaymentsByUserId(Long.valueOf(sessionId));
-            return ResponseEntity.ok("Payment successfully processed.");
-        } else {
-            return ResponseEntity.badRequest().body("Payment was not successful.");
+    public String success(@RequestParam("session_id") String sessionId) {
+        Payment payment = paymentService.findBySessionId(sessionId);
+        if (payment == null) {
+            return "payment not found";
         }
+        if (paymentService.isSessionPaid(sessionId)) {
+            return "invalid payment";
+        }
+
+        payment.setStatus(Payment.Status.PAID);
+        paymentService.update(payment);
+        return "Your payment was successful!";
     }
 
-
-    // GET: payments/cancel/
-    @GetMapping("/cancel/")
+    @GetMapping("/cancel")
     public ResponseEntity<String> returnPaymentPausedMessage() {
         return ResponseEntity.ok("Payment can be made later. "
-                + "The session is available for 24 hours.");
+                + "The session is available for 23 hours.");
     }
 }
