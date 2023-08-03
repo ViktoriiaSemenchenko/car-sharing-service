@@ -33,7 +33,7 @@ public class RentalController {
     public RentalResponseDto addRental(@RequestBody @Valid RentalRequestDto rentalRequestDto) {
         Rental rental = mapper.toModel(rentalRequestDto);
         final Rental savedRental = rentalService.save(rental);
-        notificationService.sendMessageToUser("Hello, new rental:"
+        notificationService.sendMessageToUser("Hello. New rental:"
                 + savedRental.toString(), savedRental.getUser());
         return mapper.toDto(savedRental);
     }
@@ -44,7 +44,7 @@ public class RentalController {
         Car car = rental.getCar();
         car.setInventory(car.getInventory() + 1);
         carService.save(car);
-        notificationService.sendMessageToUser("Hello, return rental:"
+        notificationService.sendMessageToUser("Hello. Your rental:"
                 + rental.toString(), rental.getUser());
         return mapper.toDto(rental);
     }

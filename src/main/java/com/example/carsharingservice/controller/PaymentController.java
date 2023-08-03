@@ -4,6 +4,7 @@ import com.example.carsharingservice.dto.request.PaymentRequestInfoDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.StripeService;
+import com.example.carsharingservice.service.TelegramNotificationService;
 import com.stripe.param.checkout.SessionCreateParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     private final StripeService stripeService;
     private final PaymentService paymentService;
+    private final TelegramNotificationService notificationService;
 
     @PostMapping
     public PaymentResponseDto createStripeSession(
@@ -35,8 +37,12 @@ public class PaymentController {
         boolean paymentSuccessful = paymentService.isSessionPaid(sessionId);
         if (paymentSuccessful) {
             paymentService.getPaymentsByUserId(Long.valueOf(sessionId));
+            notificationService.sendMessageToUser("Payment successfully processed.",
+                    paymentService.findBySessionId(sessionId).getRental().getUser());
             return ResponseEntity.ok("Payment successfully processed.");
         } else {
+            notificationService.sendMessageToUser("Payment was not successful.",
+                    paymentService.findBySessionId(sessionId).getRental().getUser());
             return ResponseEntity.badRequest().body("Payment was not successful.");
         }
     }
