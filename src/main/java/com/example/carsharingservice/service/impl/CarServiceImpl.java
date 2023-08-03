@@ -40,7 +40,7 @@ public class CarServiceImpl implements CarService {
                 -> new NoSuchElementException("Can't find car by id " + car));
         carToUpdate.setCarType(car.getCarType());
         carToUpdate.setDailyFee(car.getDailyFee());
-        carToUpdate.setBrand(car.getCarType().toString());
+        carToUpdate.setBrand(car.getBrand());
         carToUpdate.setModel(car.getModel());
         carRepository.save(carToUpdate);
     }
