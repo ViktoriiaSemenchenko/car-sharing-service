@@ -17,7 +17,7 @@ public class TelegramNotificationServiceImpl extends TelegramLongPollingBot
     private String botName;
     @Value("${telegram.bot.token}")
     private String botToken;
-    @Value("${telegram.user.id}")
+    @Value("${telegram.users.id}")
     private String user_id;
 
 
