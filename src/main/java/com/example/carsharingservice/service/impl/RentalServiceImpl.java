@@ -2,13 +2,19 @@ package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
+import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import com.example.carsharingservice.service.TelegramNotificationService;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
     private final CarService carService;
+    private final TelegramNotificationService notificationService;
 
     @Override
     public Rental save(Rental rental) {
@@ -58,6 +65,22 @@ public class RentalServiceImpl implements RentalService {
             return rentalRepository.findByUserIdAndActualReturnDateIsNull(userId);
         } else {
             return rentalRepository.findByUserIdAndActualReturnDateIsNotNull(userId);
+        }
+    }
+
+    @Scheduled(cron = "0 32 7 * * ?")
+    public void checkOverdueRentals() {
+        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+        List<Rental> overdueRentals = rentalRepository.findOverdueRentalsForTomorrow(tomorrow);
+        if (!overdueRentals.isEmpty()) {
+            for (Rental rental : overdueRentals) {
+                String message = "Overdue rental: Rental ID - " + rental.getId() + ", Return Date - " + rental.getReturnDate();
+                notificationService.sendMessageToUser(message, rental.getUser());
+            }
+        } else {
+            User user = new User();
+            user.setTelegramId(-939766354L);
+            notificationService.sendMessageToUser("HHHHHHHHHHHHHIIIIIIIIIIIIIII, Alll gooood", user);
         }
     }
 }

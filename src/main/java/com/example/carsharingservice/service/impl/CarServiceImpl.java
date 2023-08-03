@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.generics.TelegramBot;
 
 @Service
 @AllArgsConstructor
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
-
+private final TelegramBot telegramBot;
     @Override
     public Car save(Car car) {
         return carRepository.save(car);

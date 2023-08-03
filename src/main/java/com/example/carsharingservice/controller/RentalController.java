@@ -6,6 +6,7 @@ import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
+import com.example.carsharingservice.service.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.RentalMapper;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,11 +27,14 @@ public class RentalController {
     private final RentalService rentalService;
     private final RentalMapper mapper;
     private CarService carService;
+    private TelegramNotificationService notificationService;
 
     @PostMapping
     public RentalResponseDto addRental(@RequestBody @Valid RentalRequestDto rentalRequestDto) {
         Rental rental = mapper.toModel(rentalRequestDto);
         final Rental savedRental = rentalService.save(rental);
+        notificationService.sendMessageToUser("Hello, new rental:"
+                + savedRental.toString(), savedRental.getUser());
         return mapper.toDto(savedRental);
     }
 
@@ -40,6 +44,8 @@ public class RentalController {
         Car car = rental.getCar();
         car.setInventory(car.getInventory() + 1);
         carService.save(car);
+        notificationService.sendMessageToUser("Hello, return rental:"
+                + rental.toString(), rental.getUser());
         return mapper.toDto(rental);
     }
 

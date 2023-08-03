@@ -16,7 +16,7 @@ public class TelegramNotificationServiceImpl extends TelegramLongPollingBot
     @Value("${telegram.bot.name}")
     private String botName;
     @Value("${telegram.bot.token}")
-    private String botToken; // API-ключ  бота
+    private String botToken;
 
     @Override
     public String getBotUsername() {
