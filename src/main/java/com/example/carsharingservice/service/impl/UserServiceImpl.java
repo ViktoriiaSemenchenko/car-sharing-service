@@ -38,4 +38,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("Can't find user by email:" + email));
     }
+
+    @Override
+    public User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new RuntimeException("Can't find user by id: " + id));
+    }
 }

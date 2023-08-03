@@ -1,9 +1,6 @@
 package com.example.carsharingservice.dto.request;
 
-import com.example.carsharingservice.model.Car;
-import com.example.carsharingservice.model.User;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +14,6 @@ public class RentalRequestDto {
     private LocalDateTime returnDate;
     @NotNull
     private LocalDateTime actualReturnDate;
-    @Positive //todo який позітів?? чому обєкт?
-    private Car car;
-    @Positive
-    private User user;
+    private Long carId;
+    private Long userId;
 }
